@@ -1,2 +1,2 @@
 # fx_bot
-Oanda Trading Backtester
+Oanda Trading Backtester 1.0
