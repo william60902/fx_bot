@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 his_data/
-defs.py/
+defs.py
