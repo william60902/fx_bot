@@ -8,6 +8,3 @@ def get_history_data_filename(pair: str, granularity: str):
 def get_instrument_data_filename():
     return f"fx_bot/instrument_info/instruments.pkl"
 
-
-# test
-
