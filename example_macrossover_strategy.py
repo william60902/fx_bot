@@ -7,10 +7,10 @@ import utils
 """
 MA Strategy
 """
-currency = "EUR_USD"
+currency = "CAD_CHF"
 granularity = "H1"
 
-ma_list = [16, 64]
+ma_list = [50, 100]
 i_currency = instrument.Instrument.get_instrument_by_name(currency)
 
 df = pd.read_pickle(utils.get_history_data_filename(currency, granularity))
@@ -29,7 +29,7 @@ df_ma.reset_index(drop=True, inplace=True)
 define crossover/ crossunder trade signal
 """
 
-df_ma["DIFF"] = df_ma.MA_16 - df_ma.MA_64
+df_ma["DIFF"] = df_ma.MA_50 - df_ma.MA_100
 df_ma["DIFF_PREV"] = df_ma.DIFF.shift(1)
 
 
@@ -49,11 +49,21 @@ def is_trade(row):
 
 df_ma["IS_TRADE"] = df_ma.apply(is_trade, axis=1)  # apple all the Data in the certain function
 df_trades = df_ma[df_ma.IS_TRADE != 0].copy()
-print(df_trades)
+# print(df_trades)
 print(f"Trade Number: {df_trades.shape[0]}")
 
+"""
+Access the performance !!
+"""
 
-df_trades["DELTA"] = df_trades.mid_c.diff()
+df_trades["DELTA"] = (df_trades.mid_c.diff() / i_currency.pipLocation).shift(-1)
+
+# gain
+
+df_trades["GAIN"] = df_trades["DELTA"] * df_trades["IS_TRADE"]
+df_trades["GAIN"].sum()
+
+print(df_trades["GAIN"].sum())
 
 """
 use plotly on bars
