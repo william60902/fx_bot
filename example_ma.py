@@ -8,7 +8,7 @@ Firtly we need to change the ohlc data from str into float
 """
 
 pair = "EUR_USD"
-granularity = "D"
+granularity = "H1"
 # draw multiple MAs
 ma_list = [8, 16, 32, 64, 128, 256]
 
