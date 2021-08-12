@@ -1,7 +1,10 @@
+import sys
+
 import pandas as pd
 import requests
 
-import api.defs as defs
+sys.path.append("/Users/chouwilliam/fx_bot")  # add this to fix the path problem
+import account.api as api
 
 session = requests.Session()
 
@@ -17,11 +20,11 @@ start = pd.to_datetime(start)
 end = pd.to_datetime(end)
 
 # for bar
-url = f"{defs.OANDA_URL}/instruments/{instrument}/candles"
+url = f"{api.OANDA_URL}/instruments/{instrument}/candles"
 
 params = dict(count=count, granularity=granularity, price="MBA")
 
-response = session.get(url, params=params, headers=defs.SECURE_HEADER)
+response = session.get(url, params=params, headers=api.SECURE_HEADER)
 
 # data manipulate
 

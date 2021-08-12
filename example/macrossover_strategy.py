@@ -1,5 +1,9 @@
+import sys
+
 import pandas as pd
 import plotly.graph_objects as go
+
+sys.path.append("/Users/chouwilliam/fx_bot")
 
 import instrument
 import utils
@@ -108,4 +112,4 @@ fig.update_xaxes(
     gridcolor="#1f292f", showgrid=True, fixedrange=True, rangeslider=dict(visible=False)
 )
 fig.update_yaxes(gridcolor="#1f292f", showgrid=True)
-# fig.show()
+fig.show()

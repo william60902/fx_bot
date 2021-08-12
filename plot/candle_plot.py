@@ -1,8 +1,12 @@
+import sys
+
 import pandas as pd
 import plotly.graph_objects as go
 
-import utils
-from api.defs import API_KEY, OANDA_URL, SECURE_HEADER, accountID
+sys.path.append("/Users/chouwilliam/fx_bot")  # add this to fix the path problem
+
+import shared.utils as utils
+from account.api import API_KEY, OANDA_URL, SECURE_HEADER, accountID
 
 """
 Firtly we need to change the ohlc data from str into float

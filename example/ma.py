@@ -3,10 +3,14 @@ import plotly.graph_objects as go
 
 import utils
 
+"""
+Firtly we need to change the ohlc data from str into float
+"""
+
 pair = "EUR_USD"
-granularity = "H1"
-# cross MAs
-ma_list = [16, 64]
+granularity = "M5"
+# draw multiple MAs
+ma_list = [8, 16, 32, 64, 128, 256]
 
 df = pd.read_pickle(utils.get_history_data_filename(pair, granularity))
 
@@ -33,50 +37,19 @@ df_ma = df[["time", "mid_o", "mid_h", "mid_l", "mid_c"]].copy()
 for ma in ma_list:
     df_ma[f"MA_{ma}"] = df_ma.mid_c.rolling(window=ma).mean()
 
-df_ma.dropna(inplace=True)
 
-"""
-reset the index 
-"""
+df_ma.dropna(inplace=True)  # onle take the none na
 
-df_ma.reset_index(drop=True, inplace=True)
+print(df_ma.head(10))
 
-# print(df_ma)
+# print(df_ma.dropna().head(10))
 
-
-"""
-define crossover/ crossunder trade signal
-"""
-
-df_ma["DIFF"] = df_ma.MA_16 - df_ma.MA_64
+# print(df_ma.dropna(inplace = True).head(10))
 
 
-df_ma["DIFF_PREV"] = df_ma.DIFF.shift(1)
+# print(df.describe())
 
-
-# df_ma.dropna(inplace=True)  # onle take the none na
-
-
-# print(df_ma[["time", "mid_c", "MA_16", "MA_32", "DIFF", "DIFF_PREV"]])
-
-
-def is_trade(row) -> bool:
-    if row.DIFF >= 0 and row.DIFF_PREV < 0:  # crossunder
-        return True
-    if row.DIFF <= 0 and row.DIFF_PREV > 0:  # crossover
-        return True
-    return False
-
-
-df_ma["IS_TRADE"] = df_ma.apply(is_trade, axis=1)  # apple all the Data in the certain function
-
-
-df_trades = df_ma[df_ma.IS_TRADE == True].copy()
-
-print(df_trades)
-
-print(df_trades.shape)
-
+# done! all the bar data convert into float
 
 """
 use plotly on bars
@@ -111,7 +84,7 @@ for ma in ma_list:
     )
 fig.update_layout(
     width=1500,
-    height=1000,
+    height=700,
     margin=dict(l=10, b=10, t=10),
     font=dict(size=10, color="#e1e1e1"),
     paper_bgcolor="#1e1e1e",

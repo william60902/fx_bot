@@ -1,11 +1,10 @@
+import sys
+
 import pandas as pd
 import requests
 
-# API DEMO
-
-API_KEY = "5d475a6ef1636c3f21c5beae4106ec71-e7dd38f032059393592c6da22df7857e"
-accountID = "101-011-6626734-003"
-OANDA_URL = "https://api-fxpractice.oanda.com/v3"
+sys.path.append("/Users/chouwilliam/fx_bot")  # add this to fix the path problem
+from account.api import API_KEY, OANDA_URL, accountID
 
 SECURE_HEADER = {"Authorization": f"Bearer {API_KEY}"}
 
@@ -15,7 +14,7 @@ instrument_data = pd.read_pickle("fx_bot/instrument_info/instruments.pkl")
 
 currency = ["EUR", "USD", "GBP", "JPY", "CHF", "NZD", "CAD"]
 
-k = "D"
+k = "H4"
 
 
 def get_candles(pair_name: str, count: int, granularity: str):

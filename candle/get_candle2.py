@@ -1,7 +1,10 @@
+import sys
+
 import pandas as pd
 import requests
 
-from api.defs import OANDA_URL, SECURE_HEADER
+sys.path.append("/Users/chouwilliam/fx_bot")  # add this to fix the path problem
+from account.api import API_KEY, OANDA_URL, accountID
 
 session = requests.Session()
 

@@ -1,6 +1,10 @@
+import sys
+
 import pandas as pd
 
-import utils
+sys.path.append("/Users/chouwilliam/fx_bot")  # add this to fix the path problem
+
+import shared.utils as utils
 
 
 class Instrument:

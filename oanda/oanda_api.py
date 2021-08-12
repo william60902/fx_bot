@@ -1,8 +1,10 @@
+import sys
+
+sys.path.append("/Users/chouwilliam/fx_bot")  # add this to fix the path problem
+import api.defs as defs
 import pandas as pd
 import requests
-
-import api.defs as defs
-import utils
+import shared.utils as utils
 
 
 class OandaAPI:
@@ -39,6 +41,6 @@ if __name__ == "__main__":
     api = OandaAPI()
     # print(api.fetch_candles("EUR_USD", 30, "M15"))
     # print(api.fetch_instrument())
-    # df = api.get_instrument_df()
-    api.save_instrument()
-    # print(df)
+    df = api.get_instrument_df()
+    # api.save_instrument()
+    print(df)
