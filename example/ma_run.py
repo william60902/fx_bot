@@ -31,7 +31,7 @@ def get_ma_col(ma):
 def evaluate_currency(i_pair, mashort, malong, price_data):
     price_data["DIFF"] = price_data[get_ma_col(mashort)] - price_data[get_ma_col(malong)]
     price_data["DIFF_PREV"] = price_data.DIFF.shift(1)
-    price_data["IS_TRADE"] = price_data(is_trade, axis=1)
+    price_data["IS_TRADE"] = price_data.apply(is_trade, axis=1)
 
     # grab the data that occur trades
     df_trades = price_data[price_data.IS_TRADE != 0].copy()
