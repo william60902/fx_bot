@@ -1,10 +1,11 @@
 import sys
 
 sys.path.append("/Users/chouwilliam/fx_bot")  # add this to fix the path problem
-import api.defs as defs
 import pandas as pd
 import requests
 import shared.utils as utils
+from account.api import API_KEY, OANDA_URL, SECURE_HEADER, accountID
+from info.instrument import Instrument
 
 
 class OandaAPI:
@@ -12,8 +13,8 @@ class OandaAPI:
         self.session = requests.Session()
 
     def fetch_instrument(self):
-        url = f"{defs.OANDA_URL}/accounts/{defs.accountID}/instruments"
-        response = self.session.get(url, params=None, headers=defs.SECURE_HEADER)
+        url = f"{OANDA_URL}/accounts/{accountID}/instruments"
+        response = self.session.get(url, params=None, headers=SECURE_HEADER)
         return response.status_code, response.json()
 
     def get_instrument_df(self):
@@ -30,17 +31,17 @@ class OandaAPI:
             df.to_pickle(utils.get_instrument_data_filename())
 
     def fetch_candles(self, pair_name: str, count: int, granularity: str):
-        url = f"{defs.OANDA_URL}/instruments/{pair_name}/candles"
+        url = f"{OANDA_URL}/instruments/{pair_name}/candles"
         params = dict(count=count, granularity=granularity, price="MBA")
-        response = self.session.get(url, params=params, headers=defs.SECURE_HEADER)
+        response = self.session.get(url, params=params, headers=SECURE_HEADER)
 
         return response.status_code, response.json()
 
 
 if __name__ == "__main__":
     api = OandaAPI()
-    # print(api.fetch_candles("EUR_USD", 30, "M15"))
-    # print(api.fetch_instrument())
-    df = api.get_instrument_df()
-    # api.save_instrument()
+    # print(fetch_candles("EUR_USD", 30, "M15"))
+    # print(fetch_instrument())
+    df = Instrument.get_instrument_df()
+    # save_instrument()
     print(df)
