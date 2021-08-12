@@ -38,7 +38,9 @@ def evaluate_currency(i_pair, mashort, malong, price_data):
     df_trades["DELTA"] = (df_trades.mid_c.diff() / i_pair.pipLocation).shift(-1)
     df_trades["GAIN"] = df_trades["DELTA"] * df_trades["IS_TRADE"]
 
-    # print(f"{i_pair.name}{mashort}{malong} trades:{df_trades.shape[0]} gain: {df_trades["GAIN"].sum():.0f}")
+    print(
+        f"{i_pair.name} {mashort} {malong} trades:{df_trades.shape[0]} gain: {df_trades.GAIN.sum():.0f}"
+    )
 
     return df_trades["GAIN"].sum()
 
@@ -89,7 +91,7 @@ def run():
                 best = res
                 b_mashort = _mashort
                 b_malong = _malong
-    print(f"Best:{best}, MASHORT:{b_mashort}, MASHORT: {b_malong}")
+    print(f"Best:{best:.0f}, MASHORT:{b_mashort:.0f}, MASHORT: {b_malong:.0f}")
 
 
 if __name__ == "__main__":
