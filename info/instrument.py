@@ -49,7 +49,7 @@ class Instrument:
         if pairname in d:
             return d[pairname]
         else:
-            raise ValueError("The pairname is not in the list@")
+            raise ValueError("The pairname is not in the list!")
 
 
 # if __name__ == "__main__":
