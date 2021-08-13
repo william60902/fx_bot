@@ -14,7 +14,7 @@ instrument_data = pd.read_pickle("fx_bot/instrument_info/instruments.pkl")
 
 currency = ["EUR", "USD", "GBP", "JPY", "CHF", "NZD", "CAD"]
 
-k = "H4"
+k = "H2"
 
 
 def get_candles(pair_name: str, count: int, granularity: str):
